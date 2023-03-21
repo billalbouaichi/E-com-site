@@ -5,23 +5,28 @@ const {
   deleteSubcategorie,
   updateSubcategorie,
   getSubCategories,
-  getSubCategorieSp
+  getSubCategorieSp,
+  setCategorieIdToBody,
+  funcfilterObjects,
 } = require("../services/subcategorieServices");
 const {
   createSubCategorieValidator,
   deleteSubCategorieValidator,
   updateSubCategorieValidator,
-  getSubCategorieSpValidator
+  getSubCategorieSpValidator,
 } = require("../utils/validators/subcategorieValidator");
+//merge params : nous donne l'access a les parametre de les autres routes
+const router = express.Router({ mergeParams: true });
 
-const router = express.Router();
-
-router.route("/").post(createSubCategorieValidator, createSubCategories).get(getSubCategories);
+router
+  .route("/")
+  .post(setCategorieIdToBody, createSubCategorieValidator, createSubCategories)
+  .get(funcfilterObjects, getSubCategories);
 
 router
   .route("/:id")
   .delete(deleteSubCategorieValidator, deleteSubcategorie)
   .put(updateSubCategorieValidator, updateSubcategorie)
-  .get(getSubCategorieSpValidator,getSubCategorieSp);
+  .get(getSubCategorieSpValidator, getSubCategorieSp);
 
 module.exports = router;
