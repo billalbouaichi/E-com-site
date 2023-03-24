@@ -1,4 +1,6 @@
-const express = require("express"); /*
+const express = require("express");
+const isAdmin = require("../middlewares/isAdmin");
+/*
 const {
   getBrandValidator,
   createBrandValidator,
@@ -23,15 +25,19 @@ const {
   deleteUservalidator,
   changeUserPasswordValidator,
 } = require("../utils/validators/userValidator");
+const verifyToken = require("../middlewares/verifieToken");
 
 const router = express.Router();
 
-router.route("/").get(getUsers).post(createUserValidator, createUser);
+router
+  .route("/")
+  .get(verifyToken, isAdmin, getUsers)
+  .post(createUserValidator, createUser);
 router
   .route("/:id")
-  .get(getUservalidator, getUser)
-  .put(updateUserValidator, updateUser)
-  .delete(deleteUservalidator, deleteUser);
+  .get(verifyToken, isAdmin, getUservalidator, getUser)
+  .put(verifyToken, isAdmin, updateUserValidator, updateUser)
+  .delete(verifyToken, isAdmin, deleteUservalidator, deleteUser);
 router.put(
   "/changepassword/:id",
   changeUserPasswordValidator,

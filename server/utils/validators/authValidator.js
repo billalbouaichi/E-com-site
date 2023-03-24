@@ -52,7 +52,8 @@ exports.registerValidator = [
           return Promise.reject(new Error("cet email existe deja"));
         }
       });
-    }),
+    })
+    .toLowerCase(),
   check("password")
     .notEmpty()
     .withMessage("Le mot de passe doit être renseigné")
@@ -79,5 +80,20 @@ exports.registerValidator = [
     .optional({ nullable: true })
     .isLength({ max: 255 })
     .withMessage("La photo de profil doit contenir moins de 255 caractères"),
+  validatorMiddleware,
+];
+
+exports.loginValidator = [
+  check("email")
+    .notEmpty()
+    .withMessage("L'email doit être renseigné")
+    .isEmail()
+    .withMessage("Invalid Email")
+    .toLowerCase(),
+  check("password")
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 6 })
+    .withMessage("Le mot de passe doit contenir au moins 6 caractères"),
   validatorMiddleware,
 ];

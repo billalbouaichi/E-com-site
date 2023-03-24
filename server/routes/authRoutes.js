@@ -1,10 +1,14 @@
 const express = require("express");
-const { registerValidator } = require("../utils/validators/authValidator");
-const { register } = require("../services/authServices");
+const {
+  registerValidator,
+  loginValidator,
+} = require("../utils/validators/authValidator");
+const { register, login } = require("../services/authServices");
 
 const router = express.Router();
 
 router.route("/register").post(registerValidator, register);
+router.route("/login").post(loginValidator, login);
 /*router
   .route("/:id")
   .get(getUservalidator, getUser)
