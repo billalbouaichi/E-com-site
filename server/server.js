@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,7 +15,7 @@ const categorieRoutes = require("./routes/categorieRoutes");
 const subcategorieRoutes = require("./routes/subcategorieRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-
+const productRoutes = require("./routes/productRoutes");
 //data base connection
 dbconnect();
 
@@ -22,6 +23,7 @@ const app = express();
 //MidleWare
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -33,6 +35,7 @@ app.use("/api/v1/categories", categorieRoutes);
 app.use("/api/v1/subcategories", subcategorieRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/products", productRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route :${req.originalUrl}`, 400));

@@ -12,7 +12,7 @@ function verifyToken(req, res, next) {
       throw new Error("Invalid Token , acces Interdit");
     }
   } else {
-    throw new Error("Token non disponible, acces Interdit");
+    throw new Error("veuillez se connecter");
   }
 }
 module.exports = verifyToken;

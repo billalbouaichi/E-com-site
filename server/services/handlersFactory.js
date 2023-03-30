@@ -12,8 +12,8 @@ exports.deleteOne = (Model) =>
     }
 
     // Trigger "remove" event when update document
-    document.remove();
-    res.status(204).send();
+
+    res.status(204).json({ message: "success!!" });
   });
 
 exports.updateOne = (Model) =>
