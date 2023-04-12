@@ -3,11 +3,7 @@ const ApiError = require("../utils/apiError");
 const orderModel = require("../models/orderModel");
 const orderItem = require("../models/pannierModel");
 const productModel = require("../models/productModel");
-/****************************************************
- * @desc CREATE Order
- * @route POST api/v1/orders/
- * @access PUBLIC Fournisseur|Public
- ***************************************************/
+
 exports.createOrder = asyncHandler(async (req, res, next) => {
   const orderItemsIds = Promise.all(
     req.body.orderItems.map(async (orderitem) => {
@@ -59,11 +55,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ data: order });
 });
-/****************************************************
- * @desc Get orders
- * @route Get api/v1/orders/
- * @access Private Admin|Fournisseur|Public
- ***************************************************/
+
 exports.getOrders = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
   const limit = req.query.limit * 1 || 10;
@@ -81,11 +73,7 @@ exports.getOrders = asyncHandler(async (req, res) => {
     .limit(limit);
   res.status(200).json({ result: orders.length, page, data: orders });
 });
-/****************************************************
- * @desc update le status dune commande
- * @route PUT api/v1/orders/:id
- * @access Private Admin
- ***************************************************/
+
 exports.changeOrderStatus = asyncHandler(async (req, res, next) => {
   const { orderid } = req.params;
   const status = req.body.status;
@@ -103,11 +91,7 @@ exports.changeOrderStatus = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ data: order });
 });
-/****************************************************
- * @desc Get prix Total des commande valider
- * @route GET api/v1/orders/totalprice/
- * @access Private Fournisseur Admin
- ***************************************************/
+
 exports.getTotalPriceOrders = asyncHandler(async (req, res, next) => {
   const result = await orderModel.aggregate([
     {
