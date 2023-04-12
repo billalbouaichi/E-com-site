@@ -18,11 +18,13 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: [true, "prenom obligatoire"],
     },
-    adresse: {
-      type: String,
-      trim: true,
-      required: [true, "adresse est obligatoire"],
-    },
+    adresse: [
+      {
+        type: String,
+        trim: true,
+        required: [true, "adresse est obligatoire"],
+      },
+    ],
     numtel: {
       type: String,
       required: true,
@@ -74,6 +76,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const user = mongoose.model("User", userSchema);
+const user = mongoose.model("users", userSchema);
 
 module.exports = user;

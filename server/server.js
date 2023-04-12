@@ -16,6 +16,9 @@ const subcategorieRoutes = require("./routes/subcategorieRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+const pannierRoutes = require("./routes/pannierRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+
 //data base connection
 dbconnect();
 
@@ -31,11 +34,14 @@ if (process.env.NODE_ENV === "development") {
 }
 
 //Mount Rouutes
+
 app.use("/api/v1/categories", categorieRoutes);
 app.use("/api/v1/subcategories", subcategorieRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/pannier", pannierRoutes);
+app.use("/api/v1/order", orderRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route :${req.originalUrl}`, 400));

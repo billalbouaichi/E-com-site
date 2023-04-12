@@ -1,7 +1,7 @@
 const slugify = require("slugify");
 const asyncHandler = require("express-async-handler");
-const CategorieModel = require("../models/categorieModel");
 const ApiError = require("../utils/apiError");
+const CategorieModel = require("../models/categorieModel");
 //@desc Get categories
 //@route GET /api/v1/categories
 //@access PUBLIC

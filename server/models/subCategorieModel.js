@@ -14,7 +14,7 @@ const subCategorieSchema = mongoose.Schema(
       lowercase: true,
     },
     categorie: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Categories",
       required: [true, "cat is required"],
     },

@@ -17,6 +17,7 @@ const {
   updateUser,
   deleteUser,
   changeUserPassword,
+  ajouterAdresse,
 } = require("../services/userServices");
 const {
   createUserValidator,
@@ -37,7 +38,8 @@ router
   .route("/:id")
   .get(verifyToken, isAdmin, getUservalidator, getUser)
   .put(verifyToken, isAdmin, updateUserValidator, updateUser)
-  .delete(verifyToken, isAdmin, deleteUservalidator, deleteUser);
+  .delete(verifyToken, isAdmin, deleteUservalidator, deleteUser)
+  .post(verifyToken,ajouterAdresse);
 router.put(
   "/changepassword/:id",
   changeUserPasswordValidator,

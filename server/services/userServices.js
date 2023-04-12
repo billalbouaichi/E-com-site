@@ -64,3 +64,23 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
   document.save();
   res.status(200).json({ data: document });
 });
+
+exports.ajouterAdresse = asyncHandler(async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const adresse = req.body.adresse;
+
+    // Trouver l'utilisateur par son ID
+    const user = await User.findById(userId);
+
+    // Ajouter l'adresse à la liste des adresses de l'utilisateur
+    user.adresse.push(adresse);
+
+    // Enregistrer les modifications de l'utilisateur
+    await user.save();
+
+    res.status(200).json({ message: "Adresse ajoutée avec succès" });
+  } catch (error) {
+    next(error);
+  }
+});

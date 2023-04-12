@@ -81,7 +81,7 @@ exports.getProductsByCategory = asyncHandler(async (req, res, next) => {
 -----------------------------*/
 
 exports.getProductsByFournisseur = asyncHandler(async (req, res, next) => {
-  const {prop} = req.params;
+  const { prop } = req.params;
   console.log(prop);
   const document = await product.find({ fournisseur: prop });
   if (!document) {
