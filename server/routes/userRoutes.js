@@ -34,6 +34,7 @@ router
   .route("/")
   .get(verifyToken, isAdmin, getUsers)
   .post(createUserValidator, createUser);
+  
 router
   .route("/:id")
   .get(verifyToken, isAdmin, getUservalidator, getUser)

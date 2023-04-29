@@ -10,6 +10,8 @@ const {
   deleteProduct,
   getProductsByCategory,
   getProductsByFournisseur,
+  uploadProductImages,
+  resizeProductImages,
 } = require("../services/productService");
 const {
   createProductValidator,
@@ -26,13 +28,28 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(verifyToken, isForA, createProductValidator, createProduct)
+  .post(
+    verifyToken,
+    isForA,
+    uploadProductImages,
+    resizeProductImages,
+    createProductValidator,
+    createProduct
+  )
   .get(getProducts);
 
 router
   .route("/:id")
   .get(getProductvalidator, getSpeProduct)
-  .put(verifyToken, isForA, prop, updateProductValidator, updateProduct)
+  .put(
+    verifyToken,
+    isForA,
+    prop,
+    uploadProductImages,
+    resizeProductImages,
+    updateProductValidator,
+    updateProduct
+  )
   .delete(verifyToken, isForA, prop, deleteProductValidator, deleteProduct);
 
 /*-----------------------------

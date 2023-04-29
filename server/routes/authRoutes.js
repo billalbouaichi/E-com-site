@@ -3,11 +3,18 @@ const {
   registerValidator,
   loginValidator,
 } = require("../utils/validators/authValidator");
-const { register, login } = require("../services/authServices");
+const {
+  register,
+  login,
+  uploadUserImage,
+  resizeImage,
+} = require("../services/authServices");
 
 const router = express.Router();
 
-router.route("/register").post(registerValidator, register);
+router
+  .route("/register")
+  .post(uploadUserImage, resizeImage, registerValidator, register);
 router.route("/login").post(loginValidator, login);
 /*router
   .route("/:id")

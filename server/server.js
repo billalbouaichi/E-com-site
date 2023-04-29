@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
@@ -18,21 +19,35 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const pannierRoutes = require("./routes/pannierRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 //data base connection
 dbconnect();
 
 const app = express();
 //MidleWare
-app.use(express.json());
+app.use("*", cors());
+app.use(express.json({ limit: "20kb" }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(
+  "/uploads/users",
+  express.static(path.join(__dirname, "uploads/users"))
+);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log(`mode : ${process.env.NODE_ENV}`);
 }
-
+app.get("/users/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filepath = path.join(__dirname, "uploads", "users", filename);
+  res.sendFile(filepath);
+});
+app.get("/products/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filepath = path.join(__dirname, "uploads", "products", filename);
+  res.sendFile(filepath);
+});
 //Mount Rouutes
 
 app.use("/api/v1/categories", categorieRoutes);
@@ -42,6 +57,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/pannier", pannierRoutes);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route :${req.originalUrl}`, 400));

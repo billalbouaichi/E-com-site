@@ -34,11 +34,10 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: [
-      {
-        type: String,
-      },
-    ],
+    imageCover: {
+      type: String,
+    },
+    images: [String],
   },
   { timestamps: true }
 );
